@@ -26,48 +26,32 @@ This is a nuspec. It mostly adheres to https://docs.nuget.org/create/Nuspec-Refe
     <!-- version should MATCH as closely as possible with the underlying software -->
     <!-- Is the version a prerelease of a version? https://docs.nuget.org/create/versioning#creating-prerelease-packages -->
     <!-- Note that unstable versions like 0.0.1 can be considered a released version, but it's possible that one can release a 0.0.1-beta before you release a 0.0.1 version. If the version number is final, that is considered a released version and not a prerelease. -->
-    <version>6.5.0</version>
-    <packageSourceUrl>https://gitlab.pilichiewicz.pl/chocolatey_org_apps/fileseek</packageSourceUrl>
+    <version>__REPLACE__</version>
+    <!-- <packageSourceUrl>Where is this Chocolatey package located (think GitHub)? packageSourceUrl is highly recommended for the community feed</packageSourceUrl>-->
     <!-- owners is a poor name for maintainers of the package. It sticks around by this name for compatibility reasons. It basically means you. -->
-    <owners>Dominik Pilichiewicz</owners>
+    <!--<owners>__REPLACE_YOUR_NAME__</owners>-->
     <!-- ============================== -->
 
     <!-- == SOFTWARE SPECIFIC SECTION == -->
     <!-- This section is about the software itself -->
-    <title>FileSeek</title>
+    <title>fileseek (Install)</title>
     <authors>Binary Fortress Software</authors>
     <!-- projectUrl is required for the community feed -->
-    <projectUrl>https://www.fileseek.ca</projectUrl>
-    <iconUrl>https://images.binaryfortress.com/ChocolateyIcons/FileSeek.png</iconUrl>
-    <copyright>2007-2021 Binary Fortress Software</copyright>
+    <projectUrl>https://www.fileseek.ca/</projectUrl>
+    <iconUrl>https://www.binaryfortress.com/MediaCommon/Products/256/FileSeek.png</iconUrl>
+    <!-- <copyright>Year Software Vendor</copyright> -->
     <!-- If there is a license Url available, it is required for the community feed -->
-    <licenseUrl>https://www.fileseek.ca/License/</licenseUrl>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <docsUrl>https://www.fileseek.ca/Help</docsUrl>
-    <mailingListUrl>https://www.fileseek.ca/Discussions</mailingListUrl>
+    <!-- <licenseUrl>Software License Location __REMOVE_OR_FILL_OUT__</licenseUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>-->
+    <!--<projectSourceUrl>Software Source Location - is the software FOSS somewhere? Link to it with this</projectSourceUrl>-->
+    <!--<docsUrl>At what url are the software docs located?</docsUrl>-->
+    <!--<mailingListUrl></mailingListUrl>-->
     <!--<bugTrackerUrl></bugTrackerUrl>-->
-    <tags>admin fileseek file search contents</tags>
-    <summary>File and file contents search for Windows.</summary>
-    <description>Have you ever needed to find a file buried somewhere in your computer? Have you ever needed to find a specific string of text inside a file? FileSeek can do that, and more. FileSeek is lightning fast, small and super easy to use. It can even be integrated right into the Windows Explorer right-click menu to provide quick and easy access. FileSeek doesn’t use background indexing, so when FileSeek is closed your computer’s performance won’t be affected.</description>
-    <releaseNotes>v6.5 • March 15, 2021
-Change: Added a loading spinner on FileSeek startup
-Change: New icon set
-Change: Search history is now global instead of per-profile
-Fix: Font in preview pane now scales correctly on multi-DPI setups
-Fix: Now renders Hindi characters correctly in the preview pane
-Fix: Improvements when using the "Line Range of Search" advanced setting
-Fix: "Encoding Used" column now added to CSV and HTML exports
-Fix: Editing a profile now triggers a sync
-Fix: HTML search criteria is now in order
-Fix: Image preview is now cleared when starting a new search
-Fix: File Handler FAQ link in Settings window is no longer tiny
-Fix: Other UI improvements
-  </releaseNotes>
+    <tags>fileseek</tags>
+    <summary>easy-to-use file search app that includes advanced functionality</summary>
+    <description>FileSeek is an easy-to-use file search app that includes advanced functionality for power users! Search through files using simple queries or regular expressions.  </description>
+    <!-- <releaseNotes>__REPLACE_OR_REMOVE__MarkDown_Okay</releaseNotes> -->
     <!-- =============================== -->      
-
-    <dependencies>
-      <dependency id="dotnet4.6.1" version="4.6.01055.20161213" />
-    </dependencies>    
 
     <!-- Specifying dependencies and version ranges? https://docs.nuget.org/create/versioning#specifying-version-ranges-in-.nuspec-files -->
     <!--<dependencies>

@@ -1,4 +1,4 @@
-image: gitlab.pilichiewicz.pl:5050/dockercore/builder_choco:latest
+image: gitlab.pilichiewicz.pl:5050/dockercorewindows/builder_choco:latest
 
 stages:
   - deploy

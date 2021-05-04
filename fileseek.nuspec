@@ -49,19 +49,12 @@ This is a nuspec. It mostly adheres to https://docs.nuget.org/create/Nuspec-Refe
     <tags>admin fileseek file search contents</tags>
     <summary>File and file contents search for Windows.</summary>
     <description>Have you ever needed to find a file buried somewhere in your computer? Have you ever needed to find a specific string of text inside a file? FileSeek can do that, and more. FileSeek is lightning fast, small and super easy to use. It can even be integrated right into the Windows Explorer right-click menu to provide quick and easy access. FileSeek doesn’t use background indexing, so when FileSeek is closed your computer’s performance won’t be affected.</description>
-    <releaseNotes>v6.5 • March 15, 2021
-Change: Added a loading spinner on FileSeek startup
-Change: New icon set
-Change: Search history is now global instead of per-profile
-Fix: Font in preview pane now scales correctly on multi-DPI setups
-Fix: Now renders Hindi characters correctly in the preview pane
-Fix: Improvements when using the "Line Range of Search" advanced setting
-Fix: "Encoding Used" column now added to CSV and HTML exports
-Fix: Editing a profile now triggers a sync
-Fix: HTML search criteria is now in order
-Fix: Image preview is now cleared when starting a new search
-Fix: File Handler FAQ link in Settings window is no longer tiny
-Fix: Other UI improvements
+    <releaseNotes>v6.6 • May 4, 2021
+Change: Added a tooltip to the "Treat query text as on large query term" option for clarification
+Change: New option to export all columns instead of only the ones enabled in the settings
+Fix: Exported search results no longer have ampersands in the search header names
+Fix: Fixed a minor graphical glitch with the exported HTML results
+Fix: Matched text now gets highlighted correctly when using RegEx mode
   </releaseNotes>
     <!-- =============================== -->      
 

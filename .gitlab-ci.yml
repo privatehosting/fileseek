@@ -7,6 +7,6 @@ deploy:
   stage: deploy
   script:
     - choco pack
-    - copy *.nupkg \\pilisrvfile01.pilichiewicz.local\Software$\
+    - Copy-Item -Path *.nupkg -Destination \\pilisrvfile01.pilichiewicz.local\exchange\;
   only:
     - master

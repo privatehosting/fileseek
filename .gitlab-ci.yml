@@ -7,6 +7,5 @@ deploy:
   stage: deploy
   script:
     - choco pack
-    - choco push --source "$CI_SERVER_URL/api/v4/projects/$CI_PROJECT_ID/packages/nuget/index.json" --apikey gitlab-ci-token:$CI_JOB_TOKEN
   only:
     - master

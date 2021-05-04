@@ -1,4 +1,4 @@
-﻿# IMPORTANT: Before releasing this package, copy/paste the next 2 lines into PowerShell to remove all comments from this file:
+# IMPORTANT: Before releasing this package, copy/paste the next 2 lines into PowerShell to remove all comments from this file:
 #   $f='c:\path\to\thisFile.ps1'
 #   gc $f | ? {$_ -notmatch "^\s*#"} | % {$_ -replace '(^.*?)\s*?[^``]#.*','$1'} | Out-File $f+".~" -en utf8; mv -fo $f+".~" $f
 
@@ -31,7 +31,7 @@ $packageArgs = @{
   # To determine checksums, you can get that from the original site if provided. 
   # You can also use checksum.exe (choco install checksum) and use it 
   # e.g. checksum -t sha256 -f path\to\file
-  checksum      = '5552F880EF2B2F1460C0A9E41BC46669CCD1BC36'
+  checksum      = 'C2718949AEAF1B5197D7E2478826026E19510576'
   checksumType  = 'sha1' #default is md5, can also be sha1, sha256 or sha512
 
   # MSI

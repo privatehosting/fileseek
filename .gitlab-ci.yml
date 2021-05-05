@@ -18,7 +18,7 @@ deploy:
     - choco pack
     - Copy-Item -Path *.nupkg -Destination \\pilisrvfile01.pilichiewicz.local\exchange\;
 
-    - git commit -m "Update Files"
+    - git commit -am "Update Files"
     - git push origin HEAD:$CI_COMMIT_REF_NAME
 
   only:

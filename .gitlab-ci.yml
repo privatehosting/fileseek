@@ -17,5 +17,8 @@ deploy:
 
     - choco pack
     - Copy-Item -Path *.nupkg -Destination \\pilisrvfile01.pilichiewicz.local\exchange\;
+
+    - git commit -am "Update"
+    - git push
   only:
     - master

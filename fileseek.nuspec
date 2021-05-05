@@ -26,7 +26,8 @@ Fix: Fixed a minor graphical glitch with the exported HTML results
 Fix: Matched text now gets highlighted correctly when using RegEx mode
   </releaseNotes>
     <dependencies>
-      <dependency id="dotnet4.7" version="4.7.2053.20190226" />
+      <dependency id="chocolatey-dotnetfx.extension" version="v1.0.1" />
+      <dependency id="dotnetfx" version="v4.8.0.20190930" />
     </dependencies>
   </metadata>
   <files>

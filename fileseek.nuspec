@@ -26,7 +26,7 @@ Fix: Fixed a minor graphical glitch with the exported HTML results
 Fix: Matched text now gets highlighted correctly when using RegEx mode
   </releaseNotes>
     <dependencies>
-      <dependency id="dotnet4.6.2" version="4.6.01590.20190822" />
+      <dependency id="dotnet4.7" version="4.7.2053.20190226" />
     </dependencies>
   </metadata>
   <files>

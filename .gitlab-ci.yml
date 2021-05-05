@@ -6,6 +6,15 @@ stages:
 deploy:
   stage: deploy
   script:
+    - $f='tools/chocolateyinstall.ps1'
+    - gc $f | ? {$_ -notmatch "^\s*#"} | % {$_ -replace '(^.*?)\s*?[^``]#.*','$1'} | Out-File $f+".~" -en utf8; mv -fo $f+".~" $f
+
+    - $f='tools/chocolateyuninstall.ps1'
+    - gc $f | ? {$_ -notmatch "^\s*#"} | % {$_ -replace '(^.*?)\s*?[^``]#.*','$1'} | Out-File $f+".~" -en utf8; mv -fo $f+".~" $f
+
+    - $f='tools/chocolateybeforemodify.ps1'
+    - gc $f | ? {$_ -notmatch "^\s*#"} | % {$_ -replace '(^.*?)\s*?[^``]#.*','$1'} | Out-File $f+".~" -en utf8; mv -fo $f+".~" $f
+
     - choco pack
     - Copy-Item -Path *.nupkg -Destination \\pilisrvfile01.pilichiewicz.local\exchange\;
   only:

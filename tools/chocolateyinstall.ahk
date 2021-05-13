@@ -24,5 +24,5 @@ Loop {
     Sleep 100
 
     if(A_Now > time) 
-        break
+        ExitApp
 }

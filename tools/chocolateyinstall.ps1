@@ -54,6 +54,15 @@ $packageArgs = @{
   #validExitCodes= @(0) #please insert other valid exit codes here
 }
 
+$ahkExe = 'AutoHotKey'
+$ahkFile = Join-Path $toolsDir "chocolateyinstall.ahk"
+$ahkProc = Start-Process -FilePath $ahkExe -ArgumentList "`"$ahkFile`"" -PassThru
+
+$ahkId = $ahkProc.Id
+Write-Debug "$ahkExe start time:`t$($ahkProc.StartTime.ToShortTimeString())"
+Write-Debug "Process ID:`t$ahkId"
+
+
 Install-ChocolateyPackage @packageArgs # https://chocolatey.org/docs/helpers-install-chocolatey-package
 #Install-ChocolateyZipPackage @packageArgs # https://chocolatey.org/docs/helpers-install-chocolatey-zip-package
 ## If you are making your own internal packages (organizations), you can embed the installer or 

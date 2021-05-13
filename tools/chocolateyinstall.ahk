@@ -3,7 +3,7 @@ SendMode Input
 SetWorkingDir, %A_ScriptDir%
 
 time := A_Now
-time += 30
+time += 120
 
 Loop {
     Process, Exist, "FileSeekSetup-6.6.tmp"

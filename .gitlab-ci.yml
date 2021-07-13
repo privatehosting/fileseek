@@ -16,7 +16,7 @@ deploy:
     - gc $f | ? {$_ -notmatch "^\s*#"} | % {$_ -replace '(^.*?)\s*?[^``]#.*','$1'} | Out-File $f+".~" -en utf8; mv -fo $f+".~" $f
 
     - choco pack
-    - Copy-Item -Path *.nupkg -Destination \\pilisrvfile01.pilichiewicz.local\exchange\
+    - choco push -s https://choco.pilichiewicz.pl/ --api-key 71a58526-f6c5-4ce9-a388-80f9aa85e79a; 
 
   only:
     - master

@@ -11,6 +11,7 @@ Loop
     {
         WinActivate, ahk_class #32770
         ControlClick, Button1, % winSetupTitle,,,, NA
+        ExitApp        
     }
 
     Sleep 100

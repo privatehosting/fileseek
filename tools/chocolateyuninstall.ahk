@@ -3,7 +3,7 @@ SendMode Input
 SetWorkingDir, %A_ScriptDir%
 
 time := A_Now
-time += 5 
+time += 10
 
 Loop 
 {

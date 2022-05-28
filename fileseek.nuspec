@@ -10,7 +10,7 @@
     <authors>Binary Fortress Software</authors>
     <projectUrl>https://www.fileseek.ca</projectUrl>
     <iconUrl>https://images.binaryfortress.com/ChocolateyIcons/FileSeek.png</iconUrl>
-    <copyright>2007-2021 Binary Fortress Software</copyright>
+    <copyright>2007-2022 Binary Fortress Software</copyright>
     <licenseUrl>https://www.fileseek.ca/License/</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <docsUrl>https://www.fileseek.ca/Help</docsUrl>
@@ -18,12 +18,15 @@
     <tags>admin fileseek file search contents notSilent</tags>
     <summary>File and file contents search for Windows.</summary>
     <description>Have you ever needed to find a file buried somewhere in your computer? Have you ever needed to find a specific string of text inside a file? FileSeek can do that, and more. FileSeek is lightning fast, small and super easy to use. It can even be integrated right into the Windows Explorer right-click menu to provide quick and easy access. FileSeek doesn’t use background indexing, so when FileSeek is closed your computer’s performance won’t be affected.</description>
-    <releaseNotes>v6.6 • May 4, 2021
-Change: Added a tooltip to the "Treat query text as on large query term" option for clarification
-Change: New option to export all columns instead of only the ones enabled in the settings
-Fix: Exported search results no longer have ampersands in the search header names
-Fix: Fixed a minor graphical glitch with the exported HTML results
-Fix: Matched text now gets highlighted correctly when using RegEx mode
+    <releaseNotes>v6.7 • December 14, 2021
+Change: Minor tweaks to the Settings window UI
+Change: All open search tabs are now saved between FileSeek restarts
+Change: New option to disable the preview pane
+Change: Currently loaded search profile now gets highlighted in the menu
+Change: FileSeek can now search the Windows fonts folder
+Fix: Resolved a small issue when searching LNK files
+Fix: Resolved an issue where the help button was sometimes missing the icon image
+Fix: Resolved a small UI issue that made the window status text truncate sometimes
   </releaseNotes>
     <dependencies>
       <dependency id="autohotkey" version="1.1.33.09" />

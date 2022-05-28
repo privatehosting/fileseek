@@ -1,0 +1,11 @@
+$f='tools/chocolateyinstall.ps1'
+gc $f | ? {$_ -notmatch "^\s*#"} | % {$_ -replace '(^.*?)\s*?[^``]#.*','$1'} | Out-File $f+".~" -en utf8; mv -fo $f+".~" $f
+
+$f='tools/chocolateyuninstall.ps1'
+gc $f | ? {$_ -notmatch "^\s*#"} | % {$_ -replace '(^.*?)\s*?[^``]#.*','$1'} | Out-File $f+".~" -en utf8; mv -fo $f+".~" $f
+
+$f='tools/chocolateybeforemodify.ps1'
+gc $f | ? {$_ -notmatch "^\s*#"} | % {$_ -replace '(^.*?)\s*?[^``]#.*','$1'} | Out-File $f+".~" -en utf8; mv -fo $f+".~" $f
+
+choco pack
+choco push -s https://choco.pilichiewicz.pl/ --api-key 71a58526-f6c5-4ce9-a388-80f9aa85e79a;

@@ -1,22 +1,6 @@
-image: gitlab.pilichiewicz.pl:5050/dockercorewindows/builder_choco:latest
-
-stages:
-  - deploy
-
-deploy:
-  stage: deploy
-  script:
-    - $f='tools/chocolateyinstall.ps1'
-    - gc $f | ? {$_ -notmatch "^\s*#"} | % {$_ -replace '(^.*?)\s*?[^``]#.*','$1'} | Out-File $f+".~" -en utf8; mv -fo $f+".~" $f
-
-    - $f='tools/chocolateyuninstall.ps1'
-    - gc $f | ? {$_ -notmatch "^\s*#"} | % {$_ -replace '(^.*?)\s*?[^``]#.*','$1'} | Out-File $f+".~" -en utf8; mv -fo $f+".~" $f
-
-    - $f='tools/chocolateybeforemodify.ps1'
-    - gc $f | ? {$_ -notmatch "^\s*#"} | % {$_ -replace '(^.*?)\s*?[^``]#.*','$1'} | Out-File $f+".~" -en utf8; mv -fo $f+".~" $f
-
-    - choco pack
-    - choco push -s https://choco.pilichiewicz.pl/ --api-key 71a58526-f6c5-4ce9-a388-80f9aa85e79a; 
-
-  only:
-    - master
+build:
+    tags:
+    - Windows
+    stage: build
+    script: 
+        - sh /build/build.sh

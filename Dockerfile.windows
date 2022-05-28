@@ -1,0 +1,3 @@
+FROM gitlab.pilichiewicz.pl:5050/dockercorewindows/builder_choco:latest
+ADD [".", "C:\\Temp\\"]
+RUN ["powershell.exe", "C:\\Temp\\build_choco.ps1"]

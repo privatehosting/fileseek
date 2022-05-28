@@ -39,7 +39,7 @@ $packageArgs = @{
 
 $ahkExe = 'AutoHotKey'
 $ahkFileBefore = Join-Path $toolsDir "chocolateyuninstall.ahk"
-$ahkFileAfter = Join-Path $$env:TEMP "chocolateyuninstall.ahk"
+$ahkFileAfter = Join-Path $env:TEMP "chocolateyuninstall.ahk"
 
 Copy-Item $ahkFileBefore $ahkFileAfter
 $ahkProc = Start-Process -FilePath $ahkExe -ArgumentList "`"$ahkFile`"" -PassThru

@@ -56,7 +56,7 @@ $packageArgs = @{
 
 $ahkExe = 'AutoHotKey'
 $ahkFileBefore = Join-Path $toolsDir "chocolateyinstall.ahk"
-$ahkFileAfter = Join-Path $$env:TEMP "chocolateyinstall.ahk"
+$ahkFileAfter = Join-Path $env:TEMP "chocolateyinstall.ahk"
 
 Copy-Item $ahkFileBefore $ahkFileAfter
 

@@ -4,9 +4,6 @@ default:
     - ChocoBuilder
     stage: build
 
-    image:
-      name: gitlab.pilichiewicz.pl:5050/docker/core_builder/windows/builder_choco:latest
-      
     script: 
         - $f='tools/chocolateyinstall.ps1'
         - gc $f | ? {$_ -notmatch "^\s*#"} | % {$_ -replace '(^.*?)\s*?[^``]#.*','$1'} | Out-File $f+".~" -en utf8; mv -fo $f+".~" $f

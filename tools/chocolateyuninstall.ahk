@@ -10,9 +10,8 @@ Loop
     IfWinExist, ahk_class #32770
     {
         WinActivate, ahk_class #32770
-        ControlClick, Button2, % winSetupTitle,,,, NA
+        ControlClick, Button1, % winSetupTitle,,,, NA
     }
-
 
     Sleep 100
 

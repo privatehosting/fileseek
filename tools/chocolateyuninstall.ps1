@@ -34,6 +34,12 @@ $packageArgs = @{
   #validExitCodes= @(0) #please insert other valid exit codes here
 }
 
+
+$ahkExe = 'AutoHotKey'
+$ahkFile = Join-Path $toolsDir "chocolateyuninstall.ahk"
+$ahkProc = Start-Process -FilePath $ahkExe -ArgumentList "`"$ahkFile`"" -PassThru
+
+
 $uninstalled = $false
 # Get-UninstallRegistryKey is new to 0.9.10, if supporting 0.9.9.x and below,
 # take a dependency on "chocolatey-core.extension" in your nuspec file.

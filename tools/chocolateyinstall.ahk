@@ -11,7 +11,6 @@ Loop
     {
         WinActivate, ahk_class #32770
         ControlClick, Button2, % winSetupTitle,,,, NA
-        ExitApp
     }
 
 

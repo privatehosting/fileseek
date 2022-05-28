@@ -3,7 +3,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>fileseek</id>
-    <version>6.7.6.20220528</version>
+    <version>6.7.7.20220528</version>
     <packageSourceUrl>https://gitlab.pilichiewicz.pl/chocolatey_org_apps/fileseek</packageSourceUrl>
     <owners>Dominik Pilichiewicz</owners>
     <title>FileSeek</title>

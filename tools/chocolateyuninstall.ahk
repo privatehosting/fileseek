@@ -3,7 +3,8 @@ SendMode Input
 SetWorkingDir, %A_ScriptDir%
 
 time := A_Now
-time += 120
+time += 20
+
 
 Loop 
 {
@@ -11,7 +12,6 @@ Loop
     {
         WinActivate, ahk_class #32770
         ControlClick, Button1, % winSetupTitle,,,, NA
-        ExitApp        
     }
 
     Sleep 100

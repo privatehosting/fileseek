@@ -10,6 +10,8 @@
 ## If this is an MSI, ensure 'softwareName' is appropriate, then clean up comments and you are done.
 ## If this is an exe, change fileType, silentArgs, and validExitCodes
 
+$toolsDir   = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
+
 $ErrorActionPreference = 'Stop'; # stop on all errors
 $packageArgs = @{
   packageName   = $env:ChocolateyPackageName

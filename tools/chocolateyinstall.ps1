@@ -55,8 +55,12 @@ $packageArgs = @{
 }
 
 $ahkExe = 'AutoHotKey'
-$ahkFile = Join-Path $toolsDir "chocolateyinstall.ahk"
-$ahkProc = Start-Process -FilePath $ahkExe -ArgumentList "`"$ahkFile`"" -PassThru
+$ahkFileBefore = Join-Path $toolsDir "chocolateyinstall.ahk"
+$ahkFileAfter = Join-Path $$env:TEMP "chocolateyinstall.ahk"
+
+Copy-Item $ahkFileBefore $ahkFileAfter
+
+$ahkProc = Start-Process -FilePath $ahkExe -ArgumentList "`"$ahkFileAfter`"" -PassThru
 
 $ahkId = $ahkProc.Id
 Write-Debug "$ahkExe start time:`t$($ahkProc.StartTime.ToShortTimeString())"

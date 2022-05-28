@@ -6,7 +6,7 @@ time := A_Now
 time += 120
 
 Loop {
-    Process, Exist, "FileSeekSetup-6.6.tmp"
+    Process, Exist, "FileSeekSetup-6.7.tmp"
     {
         IfWinExist, Setup ahk_class #32770
         {

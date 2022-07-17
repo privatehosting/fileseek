@@ -12,5 +12,5 @@ default:
         - $f='tools/chocolateybeforemodify.ps1'
         - gc $f | ? {$_ -notmatch "^\s*#"} | % {$_ -replace '(^.*?)\s*?[^``]#.*','$1'} | Out-File $f+".~" -en utf8; mv -fo $f+".~" $f
         - choco pack 
-        - choco push --force -s http://172.16.129.140:8081/repository/chocolatey/ --api-key "UPR0gnq8bzf2kbc*fnf";
+        - choco push --force -s http://172.16.129.140:8081/repository/chocolatey/ -k="gitlab_api:UPR0gnq8bzf2kbc*fnf";
 

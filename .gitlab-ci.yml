@@ -9,7 +9,7 @@ variables:
 
 default:
   tags:
-    - ApplicationBuild
+    - Application_Windows
 
 cleanup_scripts:
   stage: cleanup

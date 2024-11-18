@@ -41,13 +41,27 @@ push_to_internal:
     - choco push --force -s "https://nexus.srv.pilichiewicz.local/repository/chocolatey-repo-internal/" --api-key=$env:NEXUS_API_KEY
   allow_failure: false
 
-push_to_public:
-  stage: push-public
+test_installation:
+  stage: test-installation
   dependencies:
-    - package_choco
+    - push_to_internal
   script:
     - Write-Host "Switching to working directory $env:WORKING_DIR"
     - Set-Location -Path $env:WORKING_DIR
+    - Write-Host "Installing package from internal repository"
+    - choco install fileseek --source "https://nexus.srv.pilichiewicz.local/repository/chocolatey-repo-internal/" --confirm
+    - Write-Host "Testing the installation"
+    - Test-Path "C:\Program Files\FileSeek"  # Example validation step, adjust to match the package installation path
+  allow_failure: false
+
+push_to_public:
+  stage: push-public
+  dependencies:
+    - test_installation
+  script:
+    - Write-Host "Switching to working directory $env:WORKING_DIR"
+    - Set-Location -Path $env:WORKING_DIR
+    - Write-Host "Pushing package to Chocolatey Community repository"
     - choco push --api-key=$env:CHOCOLATEY_API_KEY
   allow_failure: false
   artifacts:

@@ -2,6 +2,7 @@ stages:
   - cleanup
   - package
   - push-internal
+  - test-installation
   - push-public
 
 variables:

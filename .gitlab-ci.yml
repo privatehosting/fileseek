@@ -1,5 +1,4 @@
 stages:
-  - cleanup
   - package
   - push-internal
   - test-installation
@@ -12,20 +11,14 @@ default:
   tags:
     - Application_Build
 
-cleanup_scripts:
-  stage: cleanup
+package_choco:
+  stage: package
   script:
     - Write-Host "Switching to working directory $env:WORKING_DIR"
     - Set-Location -Path $env:WORKING_DIR
     - $f='tools/chocolateyinstall.ps1'; Get-Content $f | Where-Object { $_ -notmatch '^\s*#' } | ForEach-Object { $_ -replace '(^.*?)\s*?[^`]#.*','$1' } | Out-File "$($f + '.~')" -Encoding utf8; Move-Item -Force "$($f + '.~')" $f
     - $f='tools/chocolateyuninstall.ps1'; Get-Content $f | Where-Object { $_ -notmatch '^\s*#' } | ForEach-Object { $_ -replace '(^.*?)\s*?[^`]#.*','$1' } | Out-File "$($f + '.~')" -Encoding utf8; Move-Item -Force "$($f + '.~')" $f
     - $f='tools/chocolateybeforemodify.ps1'; Get-Content $f | Where-Object { $_ -notmatch '^\s*#' } | ForEach-Object { $_ -replace '(^.*?)\s*?[^`]#.*','$1' } | Out-File "$($f + '.~')" -Encoding utf8; Move-Item -Force "$($f + '.~')" $f
-
-package_choco:
-  stage: package
-  script:
-    - Write-Host "Switching to working directory $env:WORKING_DIR"
-    - Set-Location -Path $env:WORKING_DIR
     - choco pack
   artifacts:
     paths:
@@ -50,7 +43,7 @@ test_installation:
     - Write-Host "Switching to working directory $env:WORKING_DIR"
     - Set-Location -Path $env:WORKING_DIR
     - Write-Host "Installing package from internal repository"
-    - choco install fileseek --source "https://nexus.srv.pilichiewicz.local/repository/chocolatey-repo-internal/" --confirm
+    - choco install fileseek --force --source "https://nexus.srv.pilichiewicz.local/repository/chocolatey-repo-internal/" --confirm
     - Write-Host "Testing the installation"
     - Test-Path "C:\Program Files\FileSeek"  # Example validation step, adjust to match the package installation path
   allow_failure: false

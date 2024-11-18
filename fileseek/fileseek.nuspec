@@ -3,9 +3,9 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>fileseek</id>
-    <version>6.7.0</version>
+    <version>6.9.0</version>
     <packageSourceUrl>https://gitlab.pilichiewicz.pl/chocolatey_org_apps/fileseek</packageSourceUrl>
-    <owners>Dominik Pilichiewicz</owners>
+    <owners>Keith Lammers</owners>
     <title>FileSeek</title>
     <authors>Binary Fortress Software</authors>
     <projectUrl>https://www.fileseek.ca</projectUrl>
@@ -18,19 +18,14 @@
     <tags>admin fileseek file search contents notSilent</tags>
     <summary>File and file contents search for Windows.</summary>
     <description>Have you ever needed to find a file buried somewhere in your computer? Have you ever needed to find a specific string of text inside a file? FileSeek can do that, and more. FileSeek is lightning fast, small and super easy to use. It can even be integrated right into the Windows Explorer right-click menu to provide quick and easy access. FileSeek doesn’t use background indexing, so when FileSeek is closed your computer’s performance won’t be affected.</description>
-    <releaseNotes>v6.7 • December 14, 2021
-Change: Minor tweaks to the Settings window UI
-Change: All open search tabs are now saved between FileSeek restarts
-Change: New option to disable the preview pane
-Change: Currently loaded search profile now gets highlighted in the menu
-Change: FileSeek can now search the Windows fonts folder
-Fix: Resolved a small issue when searching LNK files
-Fix: Resolved an issue where the help button was sometimes missing the icon image
-Fix: Resolved a small UI issue that made the window status text truncate sometimes
+    <releaseNotes><v6 class="9"></v6> September 5, 2023
+Change: New results context menu item: Copy selected paths
+Change: Moved result export settings to a new "Export Settings" tab
+Change: New setting to exclude status line in result exports
   </releaseNotes>
     <dependencies>
-      <dependency id="autohotkey" version="1.1.33.09" />
-      <dependency id="netfx-4.6.2" version="4.6.2.20190930" />
+      <dependency id="autohotkey" />
+      <dependency id="dotnet-7.0-desktopruntime" />
     </dependencies>
   </metadata>
   <files>

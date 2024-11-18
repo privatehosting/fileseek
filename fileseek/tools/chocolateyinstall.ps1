@@ -15,7 +15,7 @@ $toolsDir   = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
 #$fileLocation = '\\SHARE_LOCATION\to\INSTALLER_FILE'
 # Community Repo: Use official urls for non-redist binaries or redist where total package size is over 200MB
 # Internal/Organization: Download from internal location (internet sources are unreliable)
-$url        = 'https://www.binaryfortress.com/Data/Download/?Package=fileseek&Log=103' # download url, HTTPS preferred
+$url        = 'https://www.binaryfortress.com/Data/Download/?OldVersion=1&DownloadID=991e88a4-7f20-4c78-bae8-9fe466c31f86' # download url, HTTPS preferred
 # $url64      = '' # 64bit URL here (HTTPS preferred) or remove - if installer contains both (very rare), use $url
 
 $packageArgs = @{
@@ -31,8 +31,8 @@ $packageArgs = @{
   # To determine checksums, you can get that from the original site if provided. 
   # You can also use checksum.exe (choco install checksum) and use it 
   # e.g. checksum -t sha256 -f path\to\file
-  checksum      = 'EAEACA13DDBB69D54438BCBA46F43AF66F2E618E'
-  checksumType  = 'sha1' #default is md5, can also be sha1, sha256 or sha512
+  checksum      = '0F37841DF41F2B7C325FF61D2CD67A60BD25E74A15BD36A58B682DF405759218'
+  checksumType  = 'sha256' #default is md5, can also be sha1, sha256 or sha512
 
   # MSI
   # silentArgs    = "/qn /norestart /l*v `"$($env:TEMP)\$($packageName).$($env:chocolateyPackageVersion).MsiInstall.log`"" # ALLUSERS=1 DISABLEDESKTOPSHORTCUT=1 ADDDESKTOPICON=0 ADDSTARTMENU=0

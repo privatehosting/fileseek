@@ -1,15 +1,58 @@
+stages:
+  - cleanup
+  - package
+  - push-internal
+  - push-public
+
+variables:
+  WORKING_DIR: "./fileseek"
 
 default:
-    tags:
-    - ChocoBuilder
-    stage: build
+  tags:
+    - ApplicationBuild
 
-    script: 
-        - $f='tools/chocolateyinstall.ps1'
-        - gc $f | ? {$_ -notmatch "^\s*#"} | % {$_ -replace '(^.*?)\s*?[^``]#.*','$1'} | Out-File $f+".~" -en utf8; mv -fo $f+".~" $f
-        - $f='tools/chocolateyuninstall.ps1'
-        - gc $f | ? {$_ -notmatch "^\s*#"} | % {$_ -replace '(^.*?)\s*?[^``]#.*','$1'} | Out-File $f+".~" -en utf8; mv -fo $f+".~" $f
-        - $f='tools/chocolateybeforemodify.ps1'
-        - gc $f | ? {$_ -notmatch "^\s*#"} | % {$_ -replace '(^.*?)\s*?[^``]#.*','$1'} | Out-File $f+".~" -en utf8; mv -fo $f+".~" $f
-        - choco pack 
-        - choco push --force -s "https://nexus.srv.pilichiewicz.local/repository/chocolatey-repo-internal/" --api-key="f3adb985-58cf-3c03-b073-f2b99f10c2bd"
+cleanup_scripts:
+  stage: cleanup
+  script:
+    - echo "Switching to working directory: $WORKING_DIR"
+    - cd $WORKING_DIR
+    - |
+      # Define the list of files to process
+      files=("tools/chocolateyinstall.ps1" "tools/chocolateyuninstall.ps1" "tools/chocolateybeforemodify.ps1")
+      for file in "${files[@]}"; do
+        if [[ -f "$file" ]]; then
+          echo "Processing file: $file"
+          # Remove comments and save cleaned content back to the file
+          awk '!/^ *#/ { sub(/#.*/, ""); print }' "$file" > "$file.tmp" && mv "$file.tmp" "$file"
+        else
+          echo "File not found: $file"
+        fi
+      done
+
+package_choco:
+  stage: package
+  script:
+    - echo "Switching to working directory: $WORKING_DIR"
+    - cd $WORKING_DIR
+    - echo "Packing the Chocolatey package..."
+    - choco pack
+
+push_to_internal:
+  stage: push-internal
+  script:
+    - echo "Switching to working directory: $WORKING_DIR"
+    - cd $WORKING_DIR
+    - echo "Pushing to internal Nexus repository..."
+    - choco push --force -s "https://nexus.srv.pilichiewicz.local/repository/chocolatey-repo-internal/" --api-key="$NEXUS_API_KEY"
+  allow_failure: false
+
+push_to_public:
+  stage: push-public
+  needs:
+    - push_to_internal
+  script:
+    - echo "Switching to working directory: $WORKING_DIR"
+    - cd $WORKING_DIR
+    - echo "Pushing to Chocolatey Community repository..."
+    - choco push --api-key="$CHOCOLATEY_API_KEY"
+  allow_failure: false

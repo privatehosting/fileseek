@@ -44,7 +44,7 @@ test_installation:
     - Set-Location -Path $env:WORKING_DIR
     - Write-Host "Installing package from public repository"
     - choco install -y autohotkey dotnet-7.0-desktopruntime 
-    - choco install -y fileseek --force --confirm -s "https://nexus.srv.pilichiewicz.local/repository/chocolatey-repo-public/"
+    - choco install -y fileseek --pre --force --confirm -s "https://nexus.srv.pilichiewicz.local/repository/chocolatey-repo-public/"
     - Write-Host "Testing the installation" 
     - Test-Path "C:\Program Files\FileSeek"  # Example validation step, adjust to match the package installation path
   allow_failure: false

@@ -9,12 +9,11 @@ variables:
 
 default:
   tags:
-    - Application_Windows
+    - ApplicationBuild
 
 cleanup_scripts:
   stage: cleanup
   script:
-    - echo "Switching to working directory: $WORKING_DIR"
     - powershell -Command "Set-Location -Path $env:WORKING_DIR"
     - powershell -Command "$f='tools/chocolateyinstall.ps1'; gc $f | ? {$_ -notmatch '^\s*#'} | % {$_ -replace '(^.*?)\s*?[^`]#.*','$1'} | Out-File $f+'.~' -en utf8; mv -fo $f+'.~' $f"
     - powershell -Command "$f='tools/chocolateyuninstall.ps1'; gc $f | ? {$_ -notmatch '^\s*#'} | % {$_ -replace '(^.*?)\s*?[^`]#.*','$1'} | Out-File $f+'.~' -en utf8; mv -fo $f+'.~' $f"
@@ -23,14 +22,14 @@ cleanup_scripts:
 package_choco:
   stage: package
   script:
-    - echo "Switching to working directory: $WORKING_DIR"
-    - powershell -Command "Set-Location -Path $env:WORKING_DIR; choco pack"
+    - powershell -Command "Set-Location -Path $env:WORKING_DIR"
+    - powershell -Command "choco pack"
 
 push_to_internal:
   stage: push-internal
   script:
-    - echo "Switching to working directory: $WORKING_DIR"
-    - powershell -Command "Set-Location -Path $env:WORKING_DIR; choco push --force -s 'https://nexus.srv.pilichiewicz.local/repository/chocolatey-repo-internal/' --api-key='$env:NEXUS_API_KEY'"
+    - powershell -Command "Set-Location -Path $env:WORKING_DIR"
+    - powershell -Command "choco push --force -s 'https://nexus.srv.pilichiewicz.local/repository/chocolatey-repo-internal/' --api-key='$env:NEXUS_API_KEY'"
   allow_failure: false
 
 push_to_public:
@@ -38,6 +37,6 @@ push_to_public:
   needs:
     - push_to_internal
   script:
-    - echo "Switching to working directory: $WORKING_DIR"
-    - powershell -Command "Set-Location -Path $env:WORKING_DIR; choco push --api-key='$env:CHOCOLATEY_API_KEY'"
+    - powershell -Command "Set-Location -Path $env:WORKING_DIR"
+    - powershell -Command "choco push --api-key='$env:CHOCOLATEY_API_KEY'"
   allow_failure: false

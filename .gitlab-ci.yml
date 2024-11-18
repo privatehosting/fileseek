@@ -9,27 +9,30 @@ variables:
 
 default:
   tags:
-    - ApplicationBuild
+    - Application_Build
 
 cleanup_scripts:
   stage: cleanup
   script:
-    - powershell -Command "Set-Location -Path $env:WORKING_DIR"
-    - powershell -Command "$f='tools/chocolateyinstall.ps1'; gc $f | ? {$_ -notmatch '^\s*#'} | % {$_ -replace '(^.*?)\s*?[^`]#.*','$1'} | Out-File $f+'.~' -en utf8; mv -fo $f+'.~' $f"
-    - powershell -Command "$f='tools/chocolateyuninstall.ps1'; gc $f | ? {$_ -notmatch '^\s*#'} | % {$_ -replace '(^.*?)\s*?[^`]#.*','$1'} | Out-File $f+'.~' -en utf8; mv -fo $f+'.~' $f"
-    - powershell -Command "$f='tools/chocolateybeforemodify.ps1'; gc $f | ? {$_ -notmatch '^\s*#'} | % {$_ -replace '(^.*?)\s*?[^`]#.*','$1'} | Out-File $f+'.~' -en utf8; mv -fo $f+'.~' $f"
+    - Write-Host "Switching to working directory - $env:WORKING_DIR"
+    - Set-Location -Path $env:WORKING_DIR
+    - $f='tools/chocolateyinstall.ps1'; Get-Content $f | Where-Object { $_ -notmatch '^\s*#' } | ForEach-Object { $_ -replace '(^.*?)\s*?[^`]#.*','$1' } | Out-File $f.~ -Encoding utf8; Move-Item -Force $f.~ $f
+    - $f='tools/chocolateyuninstall.ps1'; Get-Content $f | Where-Object { $_ -notmatch '^\s*#' } | ForEach-Object { $_ -replace '(^.*?)\s*?[^`]#.*','$1' } | Out-File $f.~ -Encoding utf8; Move-Item -Force $f.~ $f
+    - $f='tools/chocolateybeforemodify.ps1'; Get-Content $f | Where-Object { $_ -notmatch '^\s*#' } | ForEach-Object { $_ -replace '(^.*?)\s*?[^`]#.*','$1' } | Out-File $f.~ -Encoding utf8; Move-Item -Force $f.~ $f
 
 package_choco:
   stage: package
   script:
-    - powershell -Command "Set-Location -Path $env:WORKING_DIR"
-    - powershell -Command "choco pack"
+    - Write-Host "Switching to working directory - $env:WORKING_DIR"
+    - Set-Location -Path $env:WORKING_DIR
+    - choco pack
 
 push_to_internal:
   stage: push-internal
   script:
-    - powershell -Command "Set-Location -Path $env:WORKING_DIR"
-    - powershell -Command "choco push --force -s 'https://nexus.srv.pilichiewicz.local/repository/chocolatey-repo-internal/' --api-key='$env:NEXUS_API_KEY'"
+    - Write-Host "Switching to working directory - $env:WORKING_DIR"
+    - Set-Location -Path $env:WORKING_DIR
+    - choco push --force -s "https://nexus.srv.pilichiewicz.local/repository/chocolatey-repo-internal/" --api-key=$env:NEXUS_API_KEY
   allow_failure: false
 
 push_to_public:
@@ -37,6 +40,7 @@ push_to_public:
   needs:
     - push_to_internal
   script:
-    - powershell -Command "Set-Location -Path $env:WORKING_DIR"
-    - powershell -Command "choco push --api-key='$env:CHOCOLATEY_API_KEY'"
+    - Write-Host "Switching to working directory - $env:WORKING_DIR"
+    - Set-Location -Path $env:WORKING_DIR
+    - choco push --api-key=$env:CHOCOLATEY_API_KEY
   allow_failure: false

@@ -15,35 +15,22 @@ cleanup_scripts:
   stage: cleanup
   script:
     - echo "Switching to working directory: $WORKING_DIR"
-    - cd $WORKING_DIR
-    - |
-      # Define the list of files to process
-      files=("tools/chocolateyinstall.ps1" "tools/chocolateyuninstall.ps1" "tools/chocolateybeforemodify.ps1")
-      for file in "${files[@]}"; do
-        if [[ -f "$file" ]]; then
-          echo "Processing file: $file"
-          # Remove comments and save cleaned content back to the file
-          awk '!/^ *#/ { sub(/#.*/, ""); print }' "$file" > "$file.tmp" && mv "$file.tmp" "$file"
-        else
-          echo "File not found: $file"
-        fi
-      done
+    - powershell -Command "Set-Location -Path $env:WORKING_DIR"
+    - powershell -Command "$f='tools/chocolateyinstall.ps1'; gc $f | ? {$_ -notmatch '^\s*#'} | % {$_ -replace '(^.*?)\s*?[^`]#.*','$1'} | Out-File $f+'.~' -en utf8; mv -fo $f+'.~' $f"
+    - powershell -Command "$f='tools/chocolateyuninstall.ps1'; gc $f | ? {$_ -notmatch '^\s*#'} | % {$_ -replace '(^.*?)\s*?[^`]#.*','$1'} | Out-File $f+'.~' -en utf8; mv -fo $f+'.~' $f"
+    - powershell -Command "$f='tools/chocolateybeforemodify.ps1'; gc $f | ? {$_ -notmatch '^\s*#'} | % {$_ -replace '(^.*?)\s*?[^`]#.*','$1'} | Out-File $f+'.~' -en utf8; mv -fo $f+'.~' $f"
 
 package_choco:
   stage: package
   script:
     - echo "Switching to working directory: $WORKING_DIR"
-    - cd $WORKING_DIR
-    - echo "Packing the Chocolatey package..."
-    - choco pack
+    - powershell -Command "Set-Location -Path $env:WORKING_DIR; choco pack"
 
 push_to_internal:
   stage: push-internal
   script:
     - echo "Switching to working directory: $WORKING_DIR"
-    - cd $WORKING_DIR
-    - echo "Pushing to internal Nexus repository..."
-    - choco push --force -s "https://nexus.srv.pilichiewicz.local/repository/chocolatey-repo-internal/" --api-key="$NEXUS_API_KEY"
+    - powershell -Command "Set-Location -Path $env:WORKING_DIR; choco push --force -s 'https://nexus.srv.pilichiewicz.local/repository/chocolatey-repo-internal/' --api-key='$env:NEXUS_API_KEY'"
   allow_failure: false
 
 push_to_public:
@@ -52,7 +39,5 @@ push_to_public:
     - push_to_internal
   script:
     - echo "Switching to working directory: $WORKING_DIR"
-    - cd $WORKING_DIR
-    - echo "Pushing to Chocolatey Community repository..."
-    - choco push --api-key="$CHOCOLATEY_API_KEY"
+    - powershell -Command "Set-Location -Path $env:WORKING_DIR; choco push --api-key='$env:CHOCOLATEY_API_KEY'"
   allow_failure: false

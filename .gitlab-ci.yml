@@ -14,33 +14,43 @@ default:
 cleanup_scripts:
   stage: cleanup
   script:
-    - Write-Host "Switching to working directory - $env:WORKING_DIR"
+    - Write-Host "Switching to working directory $env:WORKING_DIR"
     - Set-Location -Path $env:WORKING_DIR
-    - $f='tools/chocolateyinstall.ps1'; Get-Content $f | Where-Object { $_ -notmatch '^\s*#' } | ForEach-Object { $_ -replace '(^.*?)\s*?[^`]#.*','$1' } | Out-File $f.~ -Encoding utf8; Move-Item -Force $f.~ $f
-    - $f='tools/chocolateyuninstall.ps1'; Get-Content $f | Where-Object { $_ -notmatch '^\s*#' } | ForEach-Object { $_ -replace '(^.*?)\s*?[^`]#.*','$1' } | Out-File $f.~ -Encoding utf8; Move-Item -Force $f.~ $f
-    - $f='tools/chocolateybeforemodify.ps1'; Get-Content $f | Where-Object { $_ -notmatch '^\s*#' } | ForEach-Object { $_ -replace '(^.*?)\s*?[^`]#.*','$1' } | Out-File $f.~ -Encoding utf8; Move-Item -Force $f.~ $f
+    - $f='tools/chocolateyinstall.ps1'; Get-Content $f | Where-Object { $_ -notmatch '^\s*#' } | ForEach-Object { $_ -replace '(^.*?)\s*?[^`]#.*','$1' } | Out-File "$($f + '.~')" -Encoding utf8; Move-Item -Force "$($f + '.~')" $f
+    - $f='tools/chocolateyuninstall.ps1'; Get-Content $f | Where-Object { $_ -notmatch '^\s*#' } | ForEach-Object { $_ -replace '(^.*?)\s*?[^`]#.*','$1' } | Out-File "$($f + '.~')" -Encoding utf8; Move-Item -Force "$($f + '.~')" $f
+    - $f='tools/chocolateybeforemodify.ps1'; Get-Content $f | Where-Object { $_ -notmatch '^\s*#' } | ForEach-Object { $_ -replace '(^.*?)\s*?[^`]#.*','$1' } | Out-File "$($f + '.~')" -Encoding utf8; Move-Item -Force "$($f + '.~')" $f
 
 package_choco:
   stage: package
   script:
-    - Write-Host "Switching to working directory - $env:WORKING_DIR"
+    - Write-Host "Switching to working directory $env:WORKING_DIR"
     - Set-Location -Path $env:WORKING_DIR
     - choco pack
+  artifacts:
+    paths:
+      - fileseek/*.nupkg
+    expire_in: 1 week
 
 push_to_internal:
   stage: push-internal
+  dependencies:
+    - package_choco
   script:
-    - Write-Host "Switching to working directory - $env:WORKING_DIR"
+    - Write-Host "Switching to working directory $env:WORKING_DIR"
     - Set-Location -Path $env:WORKING_DIR
     - choco push --force -s "https://nexus.srv.pilichiewicz.local/repository/chocolatey-repo-internal/" --api-key=$env:NEXUS_API_KEY
   allow_failure: false
 
 push_to_public:
   stage: push-public
-  needs:
-    - push_to_internal
+  dependencies:
+    - package_choco
   script:
-    - Write-Host "Switching to working directory - $env:WORKING_DIR"
+    - Write-Host "Switching to working directory $env:WORKING_DIR"
     - Set-Location -Path $env:WORKING_DIR
     - choco push --api-key=$env:CHOCOLATEY_API_KEY
   allow_failure: false
+  artifacts:
+    paths:
+      - fileseek/*.nupkg
+    expire_in: 1 week

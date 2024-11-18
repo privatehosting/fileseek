@@ -48,7 +48,7 @@ test_installation:
     - Test-Path "C:\Program Files\FileSeek"  # Example validation step, adjust to match the package installation path
   allow_failure: false
 
-push_to_public:
+push_to_offical:
   stage: push-official
   dependencies:
     - test_installation

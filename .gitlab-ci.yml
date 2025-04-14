@@ -9,7 +9,7 @@ variables:
 
 default:
   tags:
-    - Application_Build
+    - Application_Windows
 
 package_choco:
   stage: package
@@ -36,8 +36,6 @@ push_to_public:
   allow_failure: false
 
 test_installation:
-  tags:
-    - windows_docker_test
   stage: test-installation
   dependencies:
     - push_to_public

@@ -36,7 +36,8 @@ push_to_public:
   allow_failure: false
 
 test_installation:
-  tags: windows_docker_test
+  tags:
+    - windows_docker_test
   stage: test-installation
   dependencies:
     - push_to_public

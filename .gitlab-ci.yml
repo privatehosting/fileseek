@@ -9,7 +9,7 @@ variables:
 
 default:
   tags:
-    - Application_Windows
+    - Windows_Choco
 
 package_choco:
   stage: package

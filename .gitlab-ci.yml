@@ -35,7 +35,7 @@ test_installation:
     - Set-Location -Path $env:WORKING_DIR
     - Write-Host "Installing package from public repository"
 
-    - powershell.exe -NoProfile -ExecutionPolicy Bypass -Command |
+    - powershell.exe -NoProfile -ExecutionPolicy Bypass -Command >
         $repoList = @();
         if ($env:WORKING_DIR) {
             $repoList += $env:WORKING_DIR
@@ -45,7 +45,7 @@ test_installation:
         $sourceArg = $repoList -join ";";
         Write-Host "Installing fileseek from sources: $sourceArg";
         choco install fileseek -y --pre --force -s $sourceArg;
-        
+
     - Write-Host "Testing the installation" 
     - Test-Path "C:\Program Files\FileSeek"  # Example validation step, adjust to match the package installation path
   allow_failure: false    

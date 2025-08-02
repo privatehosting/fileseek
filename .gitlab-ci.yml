@@ -5,7 +5,7 @@ stages:
   - push-official
 
 variables:
-  WORKING_DIR: "$env:CI_PROJECT_DIR/fileseek"
+  WORKING_DIR: "${$CI_PROJECT_DIR}/fileseek"
 
 default:
   image: "gitlab.pilichiewicz.pl:5050/docker/core_builder/windows/builder_choco:latest"

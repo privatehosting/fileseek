@@ -13,4 +13,4 @@ Write-Host "Installing fileseek from sources: $sourceArg"
 choco install fileseek -y --pre --force -s $sourceArg
 
 Write-Host "Testing the installation" 
-Test-Path "C:\Program Files\FileSeek"  # Example validation step, adjust to match the package installation path
+Test-Path "C:\ProgramData\chocolatey\lib\fileseek\tools\FileSeek64"  # Example validation step, adjust to match the package installation path

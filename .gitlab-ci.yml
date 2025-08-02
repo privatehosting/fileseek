@@ -1,7 +1,7 @@
 stages:
-  - package
-  - push-public
+  - build
   - test-installation
+  - push-public  
   - push-official
 
 variables:
@@ -13,7 +13,7 @@ default:
     - Windows_Choco
 
 package_choco:
-  stage: package
+  stage: build
   script:
     - Write-Host "Switching to working directory $env:WORKING_DIR"
     - Set-Location -Path $env:WORKING_DIR
@@ -26,6 +26,19 @@ package_choco:
       - fileseek/*.nupkg
     expire_in: 1 week
 
+test_installation:
+  stage: test-installation
+  dependencies:
+    - package_choco
+  script:
+    - Write-Host "Switching to working directory $env:WORKING_DIR"
+    - Set-Location -Path $env:WORKING_DIR
+    - Write-Host "Installing package from public repository"
+    - choco install -y fileseek --pre --force --confirm -s "https://nexus.srv.pilichiewicz.local/repository/chocolatey-repo-public/"
+    - Write-Host "Testing the installation" 
+    - Test-Path "C:\Program Files\FileSeek"  # Example validation step, adjust to match the package installation path
+  allow_failure: false    
+
 push_to_public:
   stage: push-public
   dependencies:
@@ -36,30 +49,13 @@ push_to_public:
     - choco push --force -s "https://nexus.srv.pilichiewicz.local/repository/chocolatey-repo-public/" --api-key=$env:NEXUS_API_KEY
   allow_failure: false
 
-test_installation:
-  stage: test-installation
-  dependencies:
-    - push_to_public
-  script:
-    - Write-Host "Switching to working directory $env:WORKING_DIR"
-    - Set-Location -Path $env:WORKING_DIR
-    - Write-Host "Installing package from public repository"
-    - choco install -y fileseek --pre --force --confirm -s "https://nexus.srv.pilichiewicz.local/repository/chocolatey-repo-public/"
-    - Write-Host "Testing the installation" 
-    - Test-Path "C:\Program Files\FileSeek"  # Example validation step, adjust to match the package installation path
-  allow_failure: false
-
 push_to_offical:
   stage: push-official
   dependencies:
-    - test_installation
+    - package_choco
   script:
     - Write-Host "Switching to working directory $env:WORKING_DIR"
     - Set-Location -Path $env:WORKING_DIR
     - Write-Host "Pushing package to Chocolatey Community repository"
     - choco push --api-key=$env:CHOCOLATEY_API_KEY
   allow_failure: false
-  artifacts:
-    paths:
-      - fileseek/*.nupkg
-    expire_in: 1 week

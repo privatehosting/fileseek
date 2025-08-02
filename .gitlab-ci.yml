@@ -34,8 +34,8 @@ test_installation:
     - Write-Host "Switching to working directory $env:WORKING_DIR"
     - Set-Location -Path $env:WORKING_DIR
     - Write-Host "Installing package from public repository"
-
-    - powershell.exe -NoProfile -ExecutionPolicy Bypass -Command >
+    - | 
+        powershell.exe -NoProfile -ExecutionPolicy Bypass -Command >
         $repoList = @();
         if ($env:WORKING_DIR) {
             $repoList += $env:WORKING_DIR

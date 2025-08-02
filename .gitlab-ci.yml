@@ -8,7 +8,7 @@ variables:
   WORKING_DIR: "./fileseek"
 
 default:
-  image:  "mcr.microsoft.com/windows/servercore:ltsc2025"
+  image: "gitlab.pilichiewicz.pl:5050/docker/core_builder/windows/builder_choco:latest"
   tags:
     - Windows_Choco
 

@@ -53,6 +53,7 @@ test_installation:
 
 push_to_public:
   stage: push-public
+  when: manual
   dependencies:
     - package_choco
   script:

@@ -33,8 +33,7 @@ Fix: Resolved a multiple-instance issue
 Fix: Other fixes and improvements
   </releaseNotes>
     <dependencies>
-      <dependency id="autohotkey" />
-      <dependency id="dotnet-7.0-desktopruntime" />
+      <dependency id="dotnet-8.0-desktopruntime " />
     </dependencies>
   </metadata>
   <files>

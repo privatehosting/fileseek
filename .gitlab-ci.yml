@@ -34,7 +34,7 @@ test_installation:
     - Write-Host "Switching to working directory $env:WORKING_DIR"
     - Set-Location -Path $env:WORKING_DIR
     - Write-Host "Installing package from public repository"
-    - powershell.exe -NoProfile -ExecutionPolicy Bypass -File test_script.ps1
+    - powershell.exe -NoProfile -ExecutionPolicy Bypass -File ./test_script.ps1
   allow_failure: false    
 
 push_to_public:

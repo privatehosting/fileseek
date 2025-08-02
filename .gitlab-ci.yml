@@ -63,6 +63,7 @@ push_to_public:
 
 push_to_offical:
   stage: push-official
+  when: manual
   dependencies:
     - package_choco
   script:

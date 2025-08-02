@@ -1,6 +1,6 @@
 $ErrorActionPreference = 'Stop'; # stop on all errors
 $toolsDir = Split-Path -parent $MyInvocation.MyCommand.Definition
-$exePath  = Join-Path $toolsDir 'FileSeek\fileseek.exe'
+$exePath  = Join-Path $toolsDir 'fileseek.exe'
 
 $url        = 'https://binaryfortressdownloads.com/Download/BFSFiles/103/FileSeek-7.0-x64.zip' # download url, HTTPS preferred
 

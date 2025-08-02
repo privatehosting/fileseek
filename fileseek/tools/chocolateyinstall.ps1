@@ -15,13 +15,12 @@ $toolsDir   = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
 #$fileLocation = '\\SHARE_LOCATION\to\INSTALLER_FILE'
 # Community Repo: Use official urls for non-redist binaries or redist where total package size is over 200MB
 # Internal/Organization: Download from internal location (internet sources are unreliable)
-$url        = 'https://www.binaryfortress.com/Data/Download/?OldVersion=1&DownloadID=991e88a4-7f20-4c78-bae8-9fe466c31f86' # download url, HTTPS preferred
+$url        = 'https://www.binaryfortress.com/Data/Download/?Package=fileseek&noinstall=1&Log=103' # download url, HTTPS preferred
 # $url64      = '' # 64bit URL here (HTTPS preferred) or remove - if installer contains both (very rare), use $url
 
 $packageArgs = @{
   packageName   = $env:ChocolateyPackageName
   unzipLocation = $toolsDir
-  fileType      = 'exe' #only one of these: exe, msi, msu
   url           = $url
   # file         = $fileLocation
 
@@ -39,7 +38,7 @@ $packageArgs = @{
   # validExitCodes= @(0, 3010, 1641)
   # OTHERS
   # Uncomment matching EXE type (sorted by most to least common)
-  silentArgs = "/VERYSILENT /LAUNCHAFTER=0"
+  #silentArgs = "/VERYSILENT /LAUNCHAFTER=0"
   #silentArgs   = '/S'           # NSIS
   #silentArgs   = '/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-' # Inno Setup
   #silentArgs   = '/s'           # InstallShield
@@ -54,20 +53,8 @@ $packageArgs = @{
   #validExitCodes= @(0) #please insert other valid exit codes here
 }
 
-$ahkExe = 'AutoHotKey'
-$ahkFileBefore = Join-Path $toolsDir "chocolateyinstall.ahk"
-$ahkFileAfter = Join-Path $env:TEMP "chocolateyinstall.ahk"
 
-Copy-Item $ahkFileBefore $ahkFileAfter
-
-$ahkProc = Start-Process -FilePath $ahkExe -ArgumentList "`"$ahkFileAfter`"" -PassThru
-
-$ahkId = $ahkProc.Id
-Write-Debug "$ahkExe start time:`t$($ahkProc.StartTime.ToShortTimeString())"
-Write-Debug "Process ID:`t$ahkId"
-
-
-Install-ChocolateyPackage @packageArgs # https://chocolatey.org/docs/helpers-install-chocolatey-package
+#Install-ChocolateyPackage @packageArgs # https://chocolatey.org/docs/helpers-install-chocolatey-package
 #Install-ChocolateyZipPackage @packageArgs # https://chocolatey.org/docs/helpers-install-chocolatey-zip-package
 ## If you are making your own internal packages (organizations), you can embed the installer or 
 ## put on internal file share and use the following instead (you'll need to add $file to the above)
@@ -83,7 +70,7 @@ Install-ChocolateyPackage @packageArgs # https://chocolatey.org/docs/helpers-ins
 ##Install-ChocolateyPackage $packageName $fileType $silentArgs $url [$url64 -validExitCodes $validExitCodes -checksum $checksum -checksumType $checksumType -checksum64 $checksum64 -checksumType64 $checksumType64]
 
 ## Download and unpack a zip file - https://chocolatey.org/docs/helpers-install-chocolatey-zip-package
-##Install-ChocolateyZipPackage $packageName $url $toolsDir [$url64 -checksum $checksum -checksumType $checksumType -checksum64 $checksum64 -checksumType64 $checksumType64]
+Install-ChocolateyZipPackage $packageName $url $toolsDir [$url64 -checksum $checksum -checksumType $checksumType -checksum64 $checksum64 -checksumType64 $checksumType64]
 
 ## Install Visual Studio Package - https://chocolatey.org/docs/helpers-install-chocolatey-vsix-package
 #Install-ChocolateyVsixPackage $packageName $url [$vsVersion] [-checksum $checksum -checksumType $checksumType]

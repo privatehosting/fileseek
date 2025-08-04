@@ -42,7 +42,6 @@ push_to_public:
   dependencies:
     - package_choco
   script:
-    - gci env:* | sort-object name
     - Write-Host "Switching to working directory $env:WORKING_DIR"
     - Set-Location -Path $env:WORKING_DIR
     - choco push --force -s "http://nexus.srv.pilichiewicz.local/repository/chocolatey-repo-public/index.xml" --api-key="$env:NEXUS_API_KEY"

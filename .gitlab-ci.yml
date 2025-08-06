@@ -44,7 +44,7 @@ push_to_public:
   script:
     - Write-Host "Switching to working directory $env:WORKING_DIR"
     - Set-Location -Path $env:WORKING_DIR
-    - choco push --force -s "https://nexus.srv.pilichiewicz.local/repository/chocolatey-repo-public/" --api-key="$env:NEXUS_API_KEY"
+    - choco push --force -s "$env:NEXUS_PUBLIC_SERVER" --api-key="$env:NEXUS_API_KEY"
   allow_failure: true
 
 push_to_offical:

@@ -56,5 +56,5 @@ push_to_offical:
     - Write-Host "Switching to working directory $env:WORKING_DIR"
     - Set-Location -Path $env:WORKING_DIR
     - Write-Host "Pushing package to Chocolatey Community repository"
-    - choco push -s "https://community.chocolatey.org/api/v2/" --api-key="$env:CHOCOLATEY_API_KEY"
+    - choco push -s "https://push.chocolatey.org/" --api-key="$env:CHOCOLATEY_API_KEY"
   allow_failure: true

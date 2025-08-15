@@ -28,6 +28,16 @@ jobs:
           Write-Host "Switching to working directory $env:GITHUB_WORKSPACE"
           Set-Location -Path $env:GITHUB_WORKSPACE
 
+          $repoList = @()
+
+          if ($env:WORKING_DIR) {
+              $repoList += $env:WORKING_DIR
+          }
+          $repoList += "https://community.chocolatey.org/api/v2/"
+
+          $sourceArg = $repoList -join ";"
+          Write-Host "Installing fileseek from sources: $sourceArg"          
+
           # Paket-Verzeichnis anhand .nuspec finden, sonst Workspace verwenden
           $nuspec = Get-ChildItem -Path $env:GITHUB_WORKSPACE -Recurse -Filter *.nuspec | Select-Object -First 1
           if ($nuspec) {
@@ -61,33 +71,5 @@ jobs:
           }
 
           choco pack
-
-      - name: Test Package
-        shell: pwsh
-        run: |
-          Write-Host "Switching to working directory $env:GITHUB_WORKSPACE"
-          Set-Location -Path $env:GITHUB_WORKSPACE
-
-          # Paket-Verzeichnis anhand .nuspec finden, sonst Workspace verwenden
-          $nuspec = Get-ChildItem -Path $env:GITHUB_WORKSPACE -Recurse -Filter *.nuspec | Select-Object -First 1
-          if ($nuspec) {
-            $packageDir = $nuspec.Directory.FullName
-            Write-Host "Detected package directory: $packageDir (from $($nuspec.Name))"
-          } else {
-            $packageDir = $env:GITHUB_WORKSPACE
-            Write-Host "No .nuspec found, using workspace: $packageDir"
-          }
-
-          Set-Location -Path $packageDir
-
-          $repoList = @()
-
-          if ($env:WORKING_DIR) {
-              $repoList += $env:WORKING_DIR
-          }
-          $repoList += "https://community.chocolatey.org/api/v2/"
-
-          $sourceArg = $repoList -join ";"
-          Write-Host "Installing fileseek from sources: $sourceArg"
-
-          choco install fileseek -y --pre --force -s $sourceArg                
+          choco install fileseek -y --pre --force -s $sourceArg      
+          

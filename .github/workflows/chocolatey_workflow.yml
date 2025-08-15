@@ -21,7 +21,7 @@ jobs:
              
       - name: Pack Chocolatey
         shell: pwsh
-        run: 
+        run: |
              Write-Host "Switching to working directory $env:GITHUB_WORKSPACE"
              Set-Location -Path $env:GITHUB_WORKSPACE
              $f='tools/chocolateyinstall.ps1'; Get-Content $f | Where-Object { $_ -notmatch '^\s*#' } | ForEach-Object { $_ -replace '(^.*?)\s*?[^`]#.*','$1' } | Out-File "$($f + '.~')" -Encoding utf8; Move-Item -Force "$($f + '.~')" $f

@@ -13,18 +13,33 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+
       - name: Install Chocolatey
         shell: pwsh
-        run: 
-             Invoke-Expression ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'));
-             choco feature disable --name showDownloadProgress
-             
+        run: |
+          Set-ExecutionPolicy Bypass -Scope Process -Force
+          [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor [System.Net.SecurityProtocolType]::Tls12
+          Invoke-Expression ((New-Object Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+          choco feature disable --name=showDownloadProgress
+
       - name: Pack Chocolatey
         shell: pwsh
         run: |
-             Write-Host "Switching to working directory $env:GITHUB_WORKSPACE"
-             Set-Location -Path $env:GITHUB_WORKSPACE
-             $f='tools/chocolateyinstall.ps1'; Get-Content $f | Where-Object { $_ -notmatch '^\s*#' } | ForEach-Object { $_ -replace '(^.*?)\s*?[^`]#.*','$1' } | Out-File "$($f + '.~')" -Encoding utf8; Move-Item -Force "$($f + '.~')" $f
-             $f='tools/chocolateyuninstall.ps1'; Get-Content $f | Where-Object { $_ -notmatch '^\s*#' } | ForEach-Object { $_ -replace '(^.*?)\s*?[^`]#.*','$1' } | Out-File "$($f + '.~')" -Encoding utf8; Move-Item -Force "$($f + '.~')" $f
-             choco pack
-             
+          Write-Host "Switching to working directory $env:GITHUB_WORKSPACE"
+          Set-Location -Path $env:GITHUB_WORKSPACE
+
+          $f='tools/chocolateyinstall.ps1'
+          Get-Content $f |
+            Where-Object { $_ -notmatch '^\s*#' } |
+            ForEach-Object { $_ -replace '(^.*?)\s*?[^`]#.*','$1' } |
+            Out-File "$($f + '.~')" -Encoding utf8
+          Move-Item -Force "$($f + '.~')" $f
+
+          $f='tools/chocolateyuninstall.ps1'
+          Get-Content $f |
+            Where-Object { $_ -notmatch '^\s*#' } |
+            ForEach-Object { $_ -replace '(^.*?)\s*?[^`]#.*','$1' } |
+            Out-File "$($f + '.~')" -Encoding utf8
+          Move-Item -Force "$($f + '.~')" $f
+
+          choco pack

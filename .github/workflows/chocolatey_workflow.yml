@@ -13,6 +13,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Install Chocolatey
+        shell: pwsh
+        run: 
+             Invoke-Expression ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'));
+             choco feature disable --name showDownloadProgress
+             
       - name: Pack Chocolatey
         shell: pwsh
         run: 

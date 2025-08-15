@@ -22,9 +22,6 @@ jobs:
       - name: Pack Chocolatey
         shell: pwsh
         run: 
-             Write-Host "Switching to working directory $env:WORKING_DIR"
-             Set-Location -Path $env:WORKING_DIR
              $f='tools/chocolateyinstall.ps1'; Get-Content $f | Where-Object { $_ -notmatch '^\s*#' } | ForEach-Object { $_ -replace '(^.*?)\s*?[^`]#.*','$1' } | Out-File "$($f + '.~')" -Encoding utf8; Move-Item -Force "$($f + '.~')" $f
              $f='tools/chocolateyuninstall.ps1'; Get-Content $f | Where-Object { $_ -notmatch '^\s*#' } | ForEach-Object { $_ -replace '(^.*?)\s*?[^`]#.*','$1' } | Out-File "$($f + '.~')" -Encoding utf8; Move-Item -Force "$($f + '.~')" $f
-             $f='tools/chocolateybeforemodify.ps1'; Get-Content $f | Where-Object { $_ -notmatch '^\s*#' } | ForEach-Object { $_ -replace '(^.*?)\s*?[^`]#.*','$1' } | Out-File "$($f + '.~')" -Encoding utf8; Move-Item -Force "$($f + '.~')" $f
              choco pack

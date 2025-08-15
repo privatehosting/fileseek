@@ -28,18 +28,36 @@ jobs:
           Write-Host "Switching to working directory $env:GITHUB_WORKSPACE"
           Set-Location -Path $env:GITHUB_WORKSPACE
 
-          $f='tools/chocolateyinstall.ps1'
-          Get-Content $f |
-            Where-Object { $_ -notmatch '^\s*#' } |
-            ForEach-Object { $_ -replace '(^.*?)\s*?[^`]#.*','$1' } |
-            Out-File "$($f + '.~')" -Encoding utf8
-          Move-Item -Force "$($f + '.~')" $f
+          # Paket-Verzeichnis anhand .nuspec finden, sonst Workspace verwenden
+          $nuspec = Get-ChildItem -Path $env:GITHUB_WORKSPACE -Recurse -Filter *.nuspec | Select-Object -First 1
+          if ($nuspec) {
+            $packageDir = $nuspec.Directory.FullName
+            Write-Host "Detected package directory: $packageDir (from $($nuspec.Name))"
+          } else {
+            $packageDir = $env:GITHUB_WORKSPACE
+            Write-Host "No .nuspec found, using workspace: $packageDir"
+          }
 
-          $f='tools/chocolateyuninstall.ps1'
-          Get-Content $f |
-            Where-Object { $_ -notmatch '^\s*#' } |
-            ForEach-Object { $_ -replace '(^.*?)\s*?[^`]#.*','$1' } |
-            Out-File "$($f + '.~')" -Encoding utf8
-          Move-Item -Force "$($f + '.~')" $f
+          Set-Location -Path $packageDir
+
+          $targets = @(
+            'tools\chocolateyinstall.ps1',
+            'tools\chocolateyuninstall.ps1'
+          )
+
+          foreach ($rel in $targets) {
+            $f   = Join-Path $packageDir $rel
+            if (Test-Path -LiteralPath $f) {
+              Write-Host "Processing $rel"
+              $tmp = "$f.~"
+              Get-Content -LiteralPath $f |
+                Where-Object { $_ -notmatch '^\s*#' } |
+                ForEach-Object { $_ -replace '(^.*?)\s*?[^`]#.*','$1' } |
+                Out-File -LiteralPath $tmp -Encoding utf8
+              Move-Item -Force -LiteralPath $tmp -Destination $f
+            } else {
+              Write-Host "Skipping missing file: $rel"
+            }
+          }
 
           choco pack

@@ -4,7 +4,7 @@
   <metadata>
     <id>fileseek</id>
     <version>7.0.0</version>
-    <packageSourceUrl>https://gitlab.pilichiewicz.pl/chocolatey_org_apps/fileseek</packageSourceUrl>
+    <packageSourceUrl>https://github.com/privatehosting/fileseek</packageSourceUrl>
     <owners>Keith Lammers</owners>
     <title>FileSeek</title>
     <authors>Binary Fortress Software</authors>

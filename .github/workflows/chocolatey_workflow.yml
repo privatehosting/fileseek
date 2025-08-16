@@ -24,6 +24,8 @@ jobs:
 
       - name: Pack Chocolatey
         shell: pwsh
+        env:
+          CHOCOLATEY_API_KEY: ${{ secrets.CHOCOLATEY_API_KEY }}
         run: |
           Write-Host "Switching to working directory $env:GITHUB_WORKSPACE"
           Set-Location -Path $env:GITHUB_WORKSPACE

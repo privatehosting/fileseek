@@ -71,5 +71,4 @@ jobs:
           }
 
           choco pack
-          choco install fileseek -y --pre --force -s $sourceArg      
-          
+          choco install fileseek -y -s $sourceArg

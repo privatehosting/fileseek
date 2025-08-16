@@ -30,8 +30,8 @@ jobs:
 
           $repoList = @()
 
-          if ($env:WORKING_DIR) {
-              $repoList += $env:WORKING_DIR
+          if ($env:GITHUB_WORKSPACE) {
+              $repoList += $env:GITHUB_WORKSPACE
           }
           $repoList += "https://community.chocolatey.org/api/v2/"
 

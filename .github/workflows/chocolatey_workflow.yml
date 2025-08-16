@@ -78,12 +78,14 @@ jobs:
           choco pack
           choco install fileseek -y -s $sourceArg
 
-          if($env:CHOCOLATEY_API_KEY)
-          {
-            if(Test-Path "C:\ProgramData\chocolatey\lib\fileseek\tools\FileSeek64")
-            {
-              choco push -s "https://push.chocolatey.org/" --api-key="$env:CHOCOLATEY_API_KEY"
-            }
+          if (-not $env:CHOCOLATEY_API_KEY) {
+            throw "Secret CHOCOLATEY_API_KEY ist nicht verfügbar. Prüfe: Environment-Name, Secret-Name, Berechtigungen."
+          }          
+
+          $pkgPath = "C:\ProgramData\chocolatey\lib\fileseek\tools\FileSeek64"
+          if (Test-Path -LiteralPath $pkgPath) {
+            Write-Host "Paket gefunden. Sende an Chocolatey..."
+            choco push -s "https://push.chocolatey.org/" --api-key="$env:CHOCOLATEY_API_KEY"
           }
 
           
